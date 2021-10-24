@@ -127,7 +127,11 @@ After the repo is ready, we must create an ArgoCD app using its own custom kuber
 - Obtain HTTPS url of the GIT repository:
 
 ```
+# if using SSH log in, do the following
 $ HTTPS_REPO_URL=$(git remote show origin | sed -nr 's/.+Fetch URL: (.+)/\1/p')
+
+# if using https login, do the next one
+$ HTTPS_REPO_URL=$(git remote show origin |  sed -nr 's/.+Fetch URL: git@(.+):(.+).git/https:\/\/\1\/\2.git/p')
 ```
 
 - Create k8s namespace:
