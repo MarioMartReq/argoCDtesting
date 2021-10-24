@@ -82,6 +82,8 @@ kubectl port-forward svc/argocd-server -n argocd 10443:443 2>&1 > /dev/null &
 
 - Finally, open ArgoCD UI in your browser: [https://localhost:10443](https://localhost:10443).
 
+![](images/argo-log-in.png)
+
 ## 3. Create a deployment GIT repository
 
 As we have seen before ArgoCD use a GIT repository as the source of truth. Therefore a repository must be created with the Kubernetes application configuration in one of its compatible ways. In our case, we are going to use a simple K8s yaml file.
