@@ -27,36 +27,6 @@ $ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/
 
 - Install also ArgoCD CLI in your computer: use [official manual.](https://argo-cd.readthedocs.io/en/stable/cli_installation/) (In Mac, it was as easy as doing `brew install argocd`)
 
-### (Optional) Add SSH key from Argo to your GitHub account if using private repo
-
-- Log into the argocd pod
-
-```
-$ kubectl -n argocd exec -it pod/argocd-server-xxxxx-xxxx bash
-```
-
-- Create a new SSH key:
-
-```
-$ ssh-keygen -t rsa
-Generating public/private rsa key pair.
-Enter file in which to save the key (/home/argocd/.ssh/id_rsa):
-Created directory '/home/argocd/.ssh'.
-Enter passphrase (empty for no passphrase):
-Enter same passphrase again:
-Your identification has been saved in /home/argocd/.ssh/id_rsa
-Your public key has been saved in /home/argocd/.ssh/id_rsa.pub
-The key fingerprint is:
-...
-```
-
-- Copy the contents of `~/.ssh/id_rsa` file to your GitHub profile in Settings -> SSH and GPG keys -> New SSH key.
-
-- In the argocd UI, add the new repo in Settings -> Repositories -> Connect repo using SSH.
-
-![SSH-repo](images/ssh-repo.png)
-![successful](images/sshr-repo-succ.png)
-
 ## 2. Configure ArgoCD
 
 Although the ArgoCD is already installed in our Kubernetes cluster, it cannot be accessed externally. In order to solve that, we will expose its API / UI server and configure the CLI to use it.
@@ -119,6 +89,36 @@ $ git add k8s/*
 $ git commit -m "Added yamls"
 $ git push --set-upstream origin master
 ```
+
+### (Optional) Add SSH key from Argo to your GitHub account if using private repo
+
+- Log into the argocd pod
+
+```
+$ kubectl -n argocd exec -it pod/argocd-server-xxxxx-xxxx bash
+```
+
+- Create a new SSH key:
+
+```
+$ ssh-keygen -t rsa
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/argocd/.ssh/id_rsa):
+Created directory '/home/argocd/.ssh'.
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /home/argocd/.ssh/id_rsa
+Your public key has been saved in /home/argocd/.ssh/id_rsa.pub
+The key fingerprint is:
+...
+```
+
+- Copy the contents of `~/.ssh/id_rsa` file to your GitHub profile in Settings -> SSH and GPG keys -> New SSH key.
+
+- In the argocd UI, add the new repo in Settings -> Repositories -> Connect repo using SSH.
+
+![SSH-repo](images/ssh-repo.png)
+![successful](images/sshr-repo-succ.png)
 
 ## 4. Deploy using ArgoCD
 
