@@ -6,12 +6,12 @@ _Instructions based on [this website.](https://santanderglobaltech.com/en/from-g
 
 Before beginning the exercise, you will need:
 
-- A Kubernetes cluster in you computer. See Docker Desktop or Minkube
-- A Github account and GitHub CLI installed.
+- A Kubernetes cluster in your computer. See Docker Desktop or Minkube
+- (Optional) A Github account and GitHub CLI installed.
 
 ## 1. Install ArgoCD
 
-As seen before, ArgoCD run as an operator and we have to deploy it in Kubernetes. Besides we need a new namespace Argocd where ArgoCD services will run.
+As seen before, ArgoCD runs as an operator and we have to deploy it in Kubernetes. Besides we need a new namespace Argocd where ArgoCD services will run.
 
 - Create ArgoCD namespace:
 
@@ -25,7 +25,7 @@ $ kubectl create namespace argocd
 $ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 ```
 
-- Install also ArgoCD CLI in you computer: use [official manual.](https://argo-cd.readthedocs.io/en/stable/cli_installation/) (In Mac, it was as easy as doing `brew install argocd`)
+- Install also ArgoCD CLI in your computer: use [official manual.](https://argo-cd.readthedocs.io/en/stable/cli_installation/) (In Mac, it was as easy as doing `brew install argocd`)
 
 ### (Optional) Add SSH key from Argo to your GitHub account if using private repo
 
@@ -86,7 +86,7 @@ kubectl port-forward svc/argocd-server -n argocd 10443:443 2>&1 > /dev/null &
 
 ## 3. Create a deployment GIT repository
 
-As we have seen before ArgoCD use a GIT repository as the source of truth. Therefore a repository must be created with the Kubernetes application configuration in one of its compatible ways. In our case, we are going to use a simple K8s yaml file.
+As we have seen before ArgoCD uses a GIT repository as the source of truth. Therefore a repository must be created with the Kubernetes application configuration in one of its compatible ways. In our case, we are going to use a simple K8s yaml file.
 
 - Create a repo in your Github account (Do it from the website if you don't have the github cli tools)
 
@@ -102,7 +102,7 @@ $ git add Readme.md
 $ git commit -m "Added Readme.md" && git push --set-upstream origin master
 ```
 
-- Create live branch and push to Github with no kubernetes resources.
+- Create live branch and push to Github with no Kubernetes resources.
 
 ```
 $ git branch live
@@ -238,7 +238,7 @@ $ git push –set-upstream origin live
 
 - Go to ArgoCD UI and wait until changes have been applied:
   YES, we did it!
-  After few simple steps, we have been able to deploy an app in 2 environments in 10 minutes. That was awesome!
+  After a few simple steps, we have been able to deploy an app in 2 environments in 10 minutes. That was awesome!
 
 ![](images/second-dep-argocdui-main.png)
 ![Review sync status from App details menu](images/autosync.png)
