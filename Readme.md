@@ -1,6 +1,6 @@
 # From GIT to Kubernetes in 10 minutes with ArgoCD
 
-_Instructions based from [this website.](https://santanderglobaltech.com/en/from-git-to-kubernetes-in-10-minutes-with-argocd/)_
+_Instructions based on [this website.](https://santanderglobaltech.com/en/from-git-to-kubernetes-in-10-minutes-with-argocd/)_
 
 ## Pre-requisites
 
@@ -113,12 +113,12 @@ $ curl -kSs https://raw.githubusercontent.com/kubernetes/examples/master/guestbo
 I divided the contents of the `guestbook_app.yaml` into different files to make it more readable and store them in the `k8s` folder.
 
 ```
-$ git add guestbook_app.yaml
-$ git commit -m "Added guestbook_app.yaml"
+$ git add k8s/*
+$ git commit -m "Added yamls"
 $ git push --set-upstream origin master
 ```
 
-## 4. Deploy using ArgoCD – 3 min
+## 4. Deploy using ArgoCD
 
 After the repo is ready, we must create an ArgoCD app using its own custom kubernetes resource. Furthermore, we are going to create a new namespace to deploy on it.
 
@@ -131,7 +131,7 @@ $ HTTPS_REPO_URL=$(git remote show origin | sed -nr 's/.+Fetch URL: (.+)/\1/p')
 - Create k8s namespace:
 
 ```
-kubectl create ns argocdtesting
+$ kubectl create ns argocdtesting
 ```
 
 Deploy App:
@@ -164,7 +164,7 @@ $ argocd app sync argocdtesting
 - Check app status using Arcgocd CLI:
 
 ```
-$argocd app get argocdtesting
+$ argocd app get argocdtesting
 ```
 
 - Check Kubernetes resources using kubectl:
@@ -181,9 +181,12 @@ $ kubectl port-forward -n argocdtesting svc/frontend 18080:80
 
 Finally again, test [http://localhost:18080](http://localhost:18080) in your browser to view Guestbook app.
 
+![](images/first-dep-argocdui-main.png)
+![](images/first-dep-argocdui.png)
+
 ## 5. Deploy again but in auto mode
 
-In the last 2 minutes, we are going to see how ArgosCD automatically syncs apps based in GIT commits as if we were working in multiple environments. The idea is to:
+In the last 2 minutes, we are going to see how ArgoCD automatically syncs apps based in GIT commits as if we were working in multiple environments. The idea is to:
 
 - Simulate a live environment.
 - Deploy the app with the live branch created using a branch with no resources.
@@ -195,13 +198,13 @@ So, let´s go:
 - Create a new namespace for live environment:
 
 ```
-kubectl create ns argocdtesting-live
+$ kubectl create ns argocdtesting-live
 ```
 
 - Deploy a new app in auto mode and listening to the live branch:
 
 ```
-cat <<EOF | kubectl apply -f -
+$ cat <<EOF | kubectl apply -f -
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -235,9 +238,11 @@ $ git push –set-upstream origin live
   YES, we did it!
   After few simple steps, we have been able to deploy an app in 2 environments in 10 minutes. That was awesome!
 
+![](images/second-dep-argocdui-main.png)
+![Review sync status from App details menu](images/autosync.png)
+
 Besides we’ve learned a lot of things:
 
 - How to use GIT always as the source of truth of your deployments.
-  GitOps is easier with ArgoCD.
+- GitOps is easier with ArgoCD.
 - How to deploy automatically to multiple environments using different GIT branches.
-  Thank you and see you in the next challenge
