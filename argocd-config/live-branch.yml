@@ -1,0 +1,18 @@
+cat <<EOF | kubectl apply -f -
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocdtesting-live
+  namespace: argocd
+spec:
+  destination:
+    namespace: argocdtesting-live
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    repoURL: $HTTPS_REPO_URL
+    path: ./k8s
+    targetRevision: live
+  syncPolicy:
+    automated: {}
+EOF
