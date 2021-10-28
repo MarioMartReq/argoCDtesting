@@ -25,7 +25,7 @@ $ kubectl create namespace argocd
 $ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 ```
 
-- Install also ArgoCD CLI in your computer: use [official manual.](https://argo-cd.readthedocs.io/en/stable/cli_installation/) (In Mac, it was as easy as doing `brew install argocd`)
+- Install also ArgoCD CLI on your computer: use [official manual.](https://argo-cd.readthedocs.io/en/stable/cli_installation/) (In Mac, it was as easy as doing `brew install argocd`)
 
 ## 2. Configure ArgoCD
 
@@ -58,7 +58,7 @@ kubectl port-forward svc/argocd-server -n argocd 10443:443 2>&1 > /dev/null &
 
 As we have seen before ArgoCD uses a GIT repository as the source of truth. Therefore a repository must be created with the Kubernetes application configuration in one of its compatible ways. In our case, we are going to use a simple K8s yaml file.
 
-- Create a repo in your Github account (Do it from the website if you don't have the github cli tools)
+- Create a repo in your Github account (Do it from the website if you don't have the GitHub cli tools)
 
 ```
 $ gh repo create --public argocdtesting -y && cd argocdtesting
@@ -185,18 +185,18 @@ $ kubectl -n argocdtesting get all
 $ kubectl port-forward -n argocdtesting svc/frontend 18080:80
 ```
 
-Finally again, test [http://localhost:18080](http://localhost:18080) in your browser to view Guestbook app.
+Finally again, test [http://localhost:18080](http://localhost:18080) in your browser to view the Guestbook app.
 
 ![](images/first-dep-argocdui-main.png)
 ![](images/first-dep-argocdui.png)
 
 ## 5. Deploy again but in auto mode
 
-In the last 2 minutes, we are going to see how ArgoCD automatically syncs apps based in GIT commits as if we were working in multiple environments. The idea is to:
+In the last 2 minutes, we are going to see how ArgoCD automatically syncs apps based on GIT commits as if we were working in multiple environments. The idea is to:
 
 - Simulate a live environment.
 - Deploy the app with the live branch created using a branch with no resources.
-- Update the branch with the latest commit that add the yaml file.
+- Update the branch with the latest commit that adds the yaml file.
 - Wait until ArgoCD updates the app automatically.
 
 So, let´s go:
